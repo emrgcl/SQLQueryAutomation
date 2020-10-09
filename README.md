@@ -1,6 +1,8 @@
 # SQLQueryAutomation
 
-
+## Requirements 
+- Specify the full path to the SQL Query file. Spaces are not allowed in the file path or file name.
+- SQLServer Module
 ## Samples
 
 - Below is an oledby connection source 

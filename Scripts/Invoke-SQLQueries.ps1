@@ -7,6 +7,7 @@ Param(
 )
 
 Begin {
+    #Requires -Modules @{ModuleName= 'SqlServer' ; ModuleVersion='21.1.18080'}
     Function Write-Log {
 
         [CmdletBinding()]
@@ -72,23 +73,19 @@ finally {
 foreach ($QueryInfo in $Inventory.Queries) {
 
     Write-Log "Executing, QueryFile = '$($QueryInfo.QueryFile)', SQLServer = '$($QueryInfo.SQLServer)', SQLIntance='$($QueryInfo.SQLInstance)', DBName='$($QueryInfo.DBName)', Port='$($QueryInfo.Port)'"
-    $ConnectionString = Get-ConnectionString -QueryInfo $QueryInfo
-    Write-Log "Connection String Generated: $ConnectionString"
-    $QueryPath = "$Inventory.RootFolder\$($QueryInfo.QueryFile)" 
     try {
-        $SQLQuery = get-content -Path $QueryPath -ErrorAction
-        Write-Log "Succesfully imported query from '$QueryPath'"
-        Invoke-SQLQuery -SQLQuery $SQLQuery -ConnectionString $ConnectionString -ErrorAction Stop
+        
+        Invoke-Sqlcmd -Database $($QueryInfo.Database) -ServerInstance "$($QueryInfo.SQLServer)\$($QueryInfo.SQLInstance),$($QueryInfo.Port)" -InputFile $($QueryInfo.QueryFile)
+        $Message = "Successully executed query from '$($QueryInfo.QueryFile)' for '$($QueryInfo.SQLServer)\$($QueryInfo.SQLInstance),$($QueryInfo.Port)'"
+        
     }
-
     catch {
-        $Message = "Could'nt import query from file '$QueryPath'. Error: $($_.Exception.Message)"
+        $Message = "Couldnt execute query from file '$($QueryInfo.QueryFile) for '$($QueryInfo.SQLServer)\$($QueryInfo.SQLInstance),$($QueryInfo.Port)''. Error: $($_.Exception.Message)"
     }
     finally {
         Write-Log $Message
+        
     }
-
-
 
     }
 
