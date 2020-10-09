@@ -48,6 +48,7 @@ Process
     finally {
     Write-Log $Message
     }
+    
     foreach ($QueryInfo in $Inventory.Queries) {
 
     Write-Log "Executing, QueryFile = '$($QueryInfo.QueryFile)', SQLServer = '$($QueryInfo.SQLServer)', SQLIntance='$($QueryInfo.SQLInstance)', DBName='$($QueryInfo.DBName)', Port='$($QueryInfo.Port)'"
