@@ -5,6 +5,10 @@
 - SQLServer Module
 ## Samples
 
+```PowerShell
+ .\Invoke-SQLQueries.ps1 -QueryInventoryPath 'C:\Repos\SQLQueryAutomation\QueryInventory\FileServerGecisleri\FileServerGecisleri.psd1','C:\Repos\SQLQueryAutomation\QueryInventory\AdobeGecisleri\AdobeGecisleri.psd1' -LogFilePath C:\Temp\Log11.txt -Verbose
+```
+
 - Below is an oledby connection source 
     ```
     [oledb]
