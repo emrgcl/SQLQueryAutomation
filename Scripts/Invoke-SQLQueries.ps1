@@ -54,7 +54,7 @@ Process
     Write-Log "Executing, QueryFile = '$($QueryInfo.QueryFile)', SQLServer = '$($QueryInfo.SQLServer)', SQLIntance='$($QueryInfo.SQLInstance)', DBName='$($QueryInfo.DBName)', Port='$($QueryInfo.Port)'"
     try {
         
-        Invoke-Sqlcmd -Database $($QueryInfo.Database) -ServerInstance "$($QueryInfo.SQLServer)\$($QueryInfo.SQLInstance),$($QueryInfo.Port)" -InputFile "$($Inventory.RootFolder)\$($QueryInfo.QueryFile)"
+        Invoke-Sqlcmd -Database $QueryInfo.DBname -ServerInstance "$($QueryInfo.SQLServer)\$($QueryInfo.SQLInstance),$($QueryInfo.Port)" -InputFile "$($Inventory.RootFolder)\$($QueryInfo.QueryFile)" | Out-Null
         $Message = "Successully executed query from '$($Inventory.RootFolder)\$($QueryInfo.QueryFile)' for '$($QueryInfo.SQLServer)\$($QueryInfo.SQLInstance),$($QueryInfo.Port)'"
         
     }
